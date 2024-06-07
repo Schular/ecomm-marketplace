@@ -55,6 +55,7 @@ const getMarketplaceData = async () => {
     });
 
     result = await response.json();
+    console.log("getMarketplaceData", result);
   } catch (error) {
     console.error("error", error);
   }
