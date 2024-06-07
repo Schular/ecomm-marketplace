@@ -1,3 +1,7 @@
+import { RocketIcon } from "@radix-ui/react-icons";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
 const MARKETPLACE_API = "https://marketplace-api.emag.ro/api-3";
 
 type EmagResponse<T> = {
@@ -65,7 +69,11 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-8 gap-y-4">
       {data && (
         <>
-          <span>Invoices</span>
+          <Alert>
+            <RocketIcon className="h-4 w-4" />
+            <AlertTitle>Invoices</AlertTitle>
+            <AlertDescription>Invoices here...</AlertDescription>
+          </Alert>
           {data.results.invoices.map((invoice) => (
             <div key={invoice.number}>
               {invoice.number} - {invoice.date}
