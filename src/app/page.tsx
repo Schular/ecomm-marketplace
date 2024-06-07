@@ -74,7 +74,7 @@ export default async function Home() {
             <AlertTitle>Invoices</AlertTitle>
             <AlertDescription>Invoices here...</AlertDescription>
           </Alert>
-          {data.results.invoices.map((invoice) => (
+          {(data?.results?.invoices ?? []).map((invoice) => (
             <div key={invoice.number}>
               {invoice.number} - {invoice.date}
             </div>
