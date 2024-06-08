@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ecomm-marketplace
+    runtime: node
+    plan: free
+    buildCommand: npm install --force; npm run build
+    startCommand: npm start
+    autoDeploy: false
+    envVars:
+      - key: NODE_ENV
+        value: production
