@@ -1,38 +1,17 @@
-import { RocketIcon } from "@radix-ui/react-icons";
-
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { maskUserName } from "@/lib/maskUserName";
+import { OrderResponse } from "@/types/emag";
 
 const MARKETPLACE_API = "https://marketplace-api.emag.ro/api-3";
-
-type EmagResponse<T> = {
-  isError: boolean;
-  messages: unknown[];
-  errors: unknown[];
-  results: {
-    total_results: number;
-    invoices: T[];
-  };
-};
-
-type Supplier = {};
-type Customer = {};
-type Line = {};
-
-type Invoice = {
-  category: string;
-  name: string;
-  number: string;
-  date: string;
-  is_storno: number;
-  supplier: Supplier;
-  customer: Customer;
-  lines: Line[];
-  payment_term: number;
-  total_without_vat: number;
-  total_with_vat: number;
-  total_vat_vaule: number;
-  currency: string;
-};
 
 const getToken = () => {
   const token = Buffer.from(
@@ -43,15 +22,21 @@ const getToken = () => {
 };
 
 const getMarketplaceData = async () => {
-  let result: EmagResponse<Invoice> | null = null;
+  let result: OrderResponse | null = null;
   const token = getToken();
-  const url = `${MARKETPLACE_API}/invoice/read`;
+  const url = `${MARKETPLACE_API}/order/read`;
 
   try {
     const response = await fetch(url, {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Basic ${token}`,
       },
+      body: JSON.stringify({
+        currentPage: 1,
+        itemsPerPage: 10,
+      }),
     });
 
     result = await response.json();
@@ -65,22 +50,50 @@ const getMarketplaceData = async () => {
 
 export default async function Home() {
   const data = await getMarketplaceData();
+  const orders = data?.results ?? [];
+
+  const total = orders.reduce((acc, order) => {
+    acc += order.cashed_co;
+
+    return acc;
+  }, 0);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8 gap-y-4">
+    <main className="flex min-h-screen flex-col items-center p-8 gap-y-4">
       {data && (
-        <>
-          <Alert>
-            <RocketIcon className="h-4 w-4" />
-            <AlertTitle>Invoices</AlertTitle>
-            <AlertDescription>Invoices here...</AlertDescription>
-          </Alert>
-          {(data?.results?.invoices ?? []).map((invoice) => (
-            <div key={invoice.number}>
-              {invoice.number} - {invoice.date}
-            </div>
-          ))}
-        </>
+        <Table>
+          <TableCaption>A list of your recent orders.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[200px]">Client</TableHead>
+              <TableHead>Method</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {orders.map((order) => (
+              <TableRow key={order.id}>
+                <TableCell className="font-medium">
+                  {maskUserName(order.customer.name)}
+                </TableCell>
+                <TableCell>{order.payment_mode}</TableCell>
+                <TableCell>
+                  {order.payment_status === 1 ? "Complete" : "Pending"}
+                </TableCell>
+                <TableCell className="text-right">
+                  {order.cashed_co ? `${order.cashed_co} RON` : "0 RON"}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell className="text-right">{total} RON</TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
       )}
     </main>
   );
