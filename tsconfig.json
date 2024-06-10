@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/marketplace/server": ["./src/server-actions/marketplace/index"]
     },
     "target": "ES2017"
   },
