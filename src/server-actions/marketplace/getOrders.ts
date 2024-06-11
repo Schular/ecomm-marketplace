@@ -9,7 +9,6 @@ const MARKETPLACE_API = "https://marketplace-api.emag.ro/api-3";
 export const getOrders = async () => {
   let result: OrderResponse | null = null;
   const token = await getToken();
-  console.log("token", token);
 
   const url = `${MARKETPLACE_API}/order/read`;
 
@@ -24,12 +23,15 @@ export const getOrders = async () => {
         currentPage: 1,
         itemsPerPage: 10,
       }),
+      cache: "no-store",
     });
 
     result = await response.json();
   } catch (error) {
     console.error("error", error);
   }
+
+  console.log(result);
 
   return result;
 };
