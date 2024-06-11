@@ -31,7 +31,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@edgio/cli": "^7.0.15",
+    "@edgio/cli": "^7.12.0",
     "@edgio/core": "^7.12.0",
     "@edgio/devtools": "^7.12.0",
     "@edgio/next": "^7.12.0",

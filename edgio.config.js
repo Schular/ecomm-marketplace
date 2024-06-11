@@ -18,6 +18,8 @@ module.exports = {
   // If omitted this will default to the "Automatic Purging" configuration on the environment's Caching tab.
   // purgeCacheOnDeploy: false,
 
+  cloudRuntime: "nodejs20.x",
+
   next: {
     // Output sourcemaps so that stack traces have original source filenames and line numbers when tailing
     // the logs in the Edgio developer console.
