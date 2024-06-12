@@ -1,1 +1,1 @@
-export * from "./getOrders";
+export * from "./getMarketplaceOrders";

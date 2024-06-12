@@ -6,7 +6,7 @@ import { getToken } from "./getToken";
 
 const MARKETPLACE_API = "https://marketplace-api.emag.ro/api-3";
 
-export const getOrders = async () => {
+export const getMarketplaceOrders = async () => {
   let result: OrderResponse | null = null;
   const token = await getToken();
 
