@@ -31,7 +31,9 @@ export const getOrders = async () => {
     console.error("error", error);
   }
 
-  console.log(result);
+  if (result && result.isError) {
+    console.log(result);
+  }
 
   return result;
 };

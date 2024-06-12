@@ -1,6 +1,3 @@
-import { SignOutButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
-
 import { SelectDropdown } from "@/components/ui/SelectDropdown";
 import {
   Table,
@@ -15,17 +12,11 @@ import { REVIEW_STATUS_DROPDOWN, STATUS_DROPDOWN } from "@/constants/dropdown";
 import { getOrders } from "@/marketplace/server";
 
 export default async function Home() {
-  const user = await currentUser();
   const data = await getOrders();
   const orders = data?.results ?? [];
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8 gap-y-4">
-      <div>User: {user?.firstName}</div>
-      <div>
-        <SignOutButton />
-      </div>
-
       {data && (
         <Table>
           <TableCaption>Lista comenzi recente.</TableCaption>

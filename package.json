@@ -1,12 +1,11 @@
 {
   "scripts": {
-    "edgio:dev": "edgio dev",
-    "edgio:build": "edgio build",
-    "edgio:deploy": "edgio deploy --organization=Sourceware --property=ecomm-marketplace",
+    "edgio:dev": "dotenvx run -f .env.local -f .env -- edgio dev",
+    "edgio:cache": "dotenvx run -f .env.local -f .env -- edgio dev --cache",
+    "edgio:build": "dotenvx run -f .env.local -f .env -- edgio build",
+    "edgio:start": "dotenvx run -f .env.local -f .env -- edgio run --production",
+    "edgio:deploy": "dotenvx run -f .env.local -f .env -- edgio deploy --organization=Sourceware --property=ecomm-marketplace",
     "commit": "git-cz",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
     "lint": "next lint",
     "format:check": "prettier --check ."
   },
@@ -14,7 +13,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@clerk/nextjs": "^5.1.4",
+    "@dotenvx/dotenvx": "^0.44.1",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-select": "^2.0.0",
     "@supabase/auth-helpers-nextjs": "^0.7.4",

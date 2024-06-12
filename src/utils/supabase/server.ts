@@ -1,24 +1,19 @@
-import { auth } from "@clerk/nextjs/server";
+"use server";
+
 import {
   CookieOptions,
   createServerClient as createSupaServerClient,
 } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-import { CLERK_TEMPLATE } from "./constants";
-
 export const createServerClient = async () => {
   const cookieStore = cookies();
-  const { getToken } = auth();
-
-  const token = await getToken({ template: CLERK_TEMPLATE });
-  const authToken = token ? { Authorization: `Bearer ${token}` } : null;
 
   return createSupaServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      global: { headers: { "Cache-Control": "no-store", ...authToken } },
+      global: { headers: { "Cache-Control": "no-store" } },
       cookies: {
         get(name: string) {
           return cookieStore.get(name)?.value;
