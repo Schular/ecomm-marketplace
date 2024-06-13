@@ -15,6 +15,13 @@
       "when": 1718214699947,
       "tag": "0001_calm_roxanne_simpson",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1718264992401,
+      "tag": "0002_parallel_starfox",
+      "breakpoints": true
     }
   ]
 }

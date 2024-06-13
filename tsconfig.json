@@ -19,10 +19,17 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/marketplace/server": ["./src/server-actions/marketplace/index"]
+      "@/marketplace/server": ["./src/server-actions/marketplace/index"],
+      "@/auth/server": ["./src/server-actions/auth/index"]
     },
     "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "next-server.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
